@@ -1,26 +1,29 @@
 import React from 'react';
 import styled from 'styled-components';
 import { useSelector } from 'react-redux';
+import { useHistory } from 'react-router';
 
 const Score = (props) => {
+  const history = useHistory();
   const name = useSelector((state) => state.user.name);
   const quiz_list = useSelector((state) => state.quiz.list);
   const user_answer = useSelector((state) => state.quiz.user_answer);
 
-  const [score, setScore] = React.useState('???');
+  const score_per_question = 100 / quiz_list.length;
+  let correct_answer = 0;
 
-  const showScore = () => {
-    const score_per_question = 100 / quiz_list.length;
-    let correct_answer = 0;
+  quiz_list.forEach((quiz, index) => {
+    if (quiz.answer === user_answer[index]) {
+      correct_answer += 1;
+    }
+  });
 
-    quiz_list.forEach((quiz, index) => {
-      if (quiz.answer === user_answer[index]) {
-        correct_answer += 1;
-      }
-    });
+  const total_score = Math.ceil(score_per_question * correct_answer);
 
-    const total_score = Math.ceil(score_per_question * correct_answer);
-    setScore(total_score);
+  const [score, setScore] = React.useState(total_score);
+
+  const goWanToSay = () => {
+    history.push(`/say/${score}`);
   };
 
   return (
@@ -38,7 +41,7 @@ const Score = (props) => {
         <br />
         앞으로도 더 친하게 지내세요: )
       </Desc>
-      <Button onClick={showScore}>점수 보기</Button>
+      <Button onClick={goWanToSay}>한 마디 남기기</Button>
     </ScoreWrap>
   );
 };
