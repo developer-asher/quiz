@@ -3,6 +3,7 @@ import styled from 'styled-components';
 import { useSelector, useDispatch } from 'react-redux';
 import { addAnswer } from './redux/modules/quiz';
 import { useHistory } from 'react-router-dom';
+import { useRef } from 'react';
 
 const Quiz = (props) => {
   const dispatch = useDispatch();
@@ -20,8 +21,7 @@ const Quiz = (props) => {
 
     if (target.textContent === 'O') {
       dispatch(addAnswer(true));
-    }
-    if (target.textContent === 'X') {
+    } else {
       dispatch(addAnswer(false));
     }
   };
@@ -40,6 +40,12 @@ const Quiz = (props) => {
 
   return (
     <QuizWrap>
+      <Progress>
+        <HighLight
+          width={(user_answer.length / quiz_list.length) * 100 + '%'}
+        />
+        <Dot />
+      </Progress>
       <QuizTitle>{quiz_list[user_answer.length].question}</QuizTitle>
       <ButtonWrap onClick={checkAnswer}>
         <Button>O</Button>
@@ -55,6 +61,34 @@ const QuizWrap = styled.div`
   width: 100%;
   align-self: center;
   text-align: center;
+`;
+
+const Progress = styled.div`
+  display: flex;
+  width: 80%;
+  height: 10px;
+  margin: 0 auto;
+  border-radius: 5px;
+  background-color: #eee;
+  transform: translateY(-100px);
+  align-items: center;
+`;
+
+const HighLight = styled.div`
+  width: ${(props) => props.width};
+  height: 10px;
+  border-radius: 5px;
+  background-color: purple;
+  transition: width 1s linear;
+`;
+
+const Dot = styled.div`
+  width: 20px;
+  height: 20px;
+  margin-left: -12px;
+  border: 4px solid purple;
+  border-radius: 50%;
+  background-color: #fff;
 `;
 
 const QuizTitle = styled.p`
