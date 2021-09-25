@@ -3,11 +3,10 @@ import styled from 'styled-components';
 import { useSelector, useDispatch } from 'react-redux';
 import { addAnswer } from './redux/modules/quiz';
 import { useHistory } from 'react-router-dom';
-import { useRef } from 'react';
 
 const Quiz = (props) => {
-  const dispatch = useDispatch();
   const history = useHistory();
+  const dispatch = useDispatch();
 
   const quiz_list = useSelector((state) => state.quiz.list);
   const user_answer = useSelector((state) => state.quiz.user_answer);
@@ -29,7 +28,7 @@ const Quiz = (props) => {
   React.useEffect(() => {
     if (user_answer.length === quiz_list.length) {
       history.push('/score');
-      return;
+      return false;
     }
   }, [user_answer]);
 

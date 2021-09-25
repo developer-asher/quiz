@@ -20,7 +20,6 @@ export default function reducer(state = initialState, action = {}) {
     case 'user/SET_NAME': {
       const user_name = action.user;
 
-      console.log(user_name);
       return { name: user_name };
     }
 
