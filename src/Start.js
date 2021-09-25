@@ -1,21 +1,24 @@
 import React from 'react';
 import styled from 'styled-components';
 import { useRef } from 'react-dom';
-import { useDispatch } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import { setName } from './redux/modules/user';
 import { useHistory } from 'react-router-dom';
 
 const Start = (props) => {
+  const user_name = useSelector((state) => state.user.name);
   const dispatch = useDispatch();
   const history = useHistory();
-
   const name = React.useRef('');
-  const saveName = () => {
-    const userName = name.current.value;
 
-    dispatch(setName(userName));
-    name.current.value = '';
-    name.current.focus();
+  const saveName = () => {
+    const inputName = name.current.value;
+
+    if (user_name === inputName) {
+      alert('이름이 중복됩니다.');
+      return null;
+    }
+    dispatch(setName(inputName));
     history.push('/quiz');
   };
 
