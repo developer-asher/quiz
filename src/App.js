@@ -6,6 +6,7 @@ import React from 'react';
 import styled from 'styled-components';
 import { Route } from 'react-router';
 import WantToSay from './WantToSay';
+import Rank from './Rank';
 
 const App = () => {
   return (
@@ -21,6 +22,9 @@ const App = () => {
       </Route>
       <Route path='/say/:score' exact>
         <WantToSay />
+      </Route>
+      <Route path='/rank' exact>
+        <Rank />
       </Route>
     </Container>
   );
