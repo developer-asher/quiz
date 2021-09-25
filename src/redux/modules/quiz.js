@@ -3,6 +3,7 @@
 // Actions
 // 프로젝트이름/모듈명/어떤 액션인지 - 액션 타입 지정
 const ADD_ANSWER = 'quiz/ADD_ANSWER';
+const INITIAL_ANSWER = 'quiz/INITIAL_ANSWER';
 
 // 초기값
 const initialState = {
@@ -28,12 +29,22 @@ export function addAnswer(answer) {
   return { type: ADD_ANSWER, answer: answer };
 }
 
+export function initialAnswer(answer) {
+  return { type: INITIAL_ANSWER, answer: answer };
+}
+
 // Reducer
 export default function reducer(state = initialState, action = {}) {
   switch (action.type) {
     case 'quiz/ADD_ANSWER': {
       const new_user_answer = [...state.user_answer, action.answer];
-      console.log(action.answer);
+
+      return { ...state, user_answer: new_user_answer };
+    }
+
+    case 'quiz/INITIAL_ANSWER': {
+      const new_user_answer = [];
+      // console.log(state, action.answer);
       return { ...state, user_answer: new_user_answer };
     }
 
